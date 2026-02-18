@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -94,9 +95,9 @@ export default function LoginPage() {
         {/* Footer */}
         <p className="text-center text-gray-400 mt-6 text-sm">
           Don’t have an account?{" "}
-          <span className="text-purple-400 hover:underline cursor-pointer">
+          <Link href='/register' className="text-purple-400 hover:underline cursor-pointer">
             Sign Up
-          </span>
+          </Link>
         </p>
       </motion.div>
     </div>
