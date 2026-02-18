@@ -78,6 +78,17 @@ export default function LoginPage() {
             </label>
           </div>
 
+          <div className="flex justify-end">
+  <Link
+    href="/forgot-password"
+    className="text-sm text-purple-400 hover:text-purple-300 
+    hover:underline transition"
+  >
+    Forgot Password?
+  </Link>
+</div>
+
+
           {/* Login Button */}
           <motion.button
             whileHover={{ scale: 1.03 }}
