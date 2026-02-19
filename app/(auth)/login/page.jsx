@@ -3,10 +3,12 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   return (
     <div className="min-h-screen flex items-center justify-center 
@@ -29,6 +31,16 @@ export default function LoginPage() {
         rounded-2xl shadow-2xl 
         p-8 text-white"
       >
+
+        {/* Back Button */}
+        <button
+          onClick={() => router.back()}
+          className="mb-6 text-sm text-gray-400 hover:text-white 
+          transition flex items-center gap-2"
+        >
+          ← Back
+        </button>
+
         <h2 className="text-3xl font-bold mb-2 text-center">
           Welcome Back
         </h2>
@@ -79,15 +91,14 @@ export default function LoginPage() {
           </div>
 
           <div className="flex justify-end">
-  <Link
-    href="/forgot-password"
-    className="text-sm text-purple-400 hover:text-purple-300 
-    hover:underline transition"
-  >
-    Forgot Password?
-  </Link>
-</div>
-
+            <Link
+              href="/forgot-password"
+              className="text-sm text-purple-400 hover:text-purple-300 
+              hover:underline transition"
+            >
+              Forgot Password?
+            </Link>
+          </div>
 
           {/* Login Button */}
           <motion.button
