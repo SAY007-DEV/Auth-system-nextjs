@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { connectDB } from "@/lib/db";
+import users from "@/models/users";
 
 
 
 
-let Users = [];
+
 
 export async function POST(req) {
   try {
+    await connectDB();
     const { name, email, password } = await req.json();
 
     if (!name || !email || !password) {
@@ -19,7 +22,7 @@ export async function POST(req) {
     }
 
 
-    const userExists = Users.find((user) => user.email === email);
+    const userExists = users.find((user) => user.email === email);
 
   if (userExists) {
     return NextResponse.json(
