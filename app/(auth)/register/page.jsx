@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Router } from "next/router";
 import { useState } from "react";
+import toast ,{Toaster} from "react-hot-toast";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -10,6 +12,22 @@ export default function RegisterPage() {
     email: "",
     password: "",
   });
+
+// api call for register
+
+const handleSubmit = async (e) =>{
+  e.preventDefault();
+
+  try {
+     const res = await api.post('/auth/register', form);
+     toast.success(res.data.message);
+     Router.push('/login')    
+  } catch (error) {
+    console.log(error);
+    toast.error(error)
+    
+  }
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center 
@@ -36,7 +54,7 @@ export default function RegisterPage() {
           Join our platform
         </p>
 
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
 
           {/* Name */}
           <div>
