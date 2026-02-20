@@ -80,7 +80,7 @@ const handleSubmit =async (e)=>{
           Login to your account
         </p>
 
-        <form className="space-y-6">
+        <form className="space-y-6" onClick={handleSubmit}>
 
           {/* Email Field */}
           <div className="relative">
@@ -143,7 +143,7 @@ const handleSubmit =async (e)=>{
             bg-gradient-to-r from-purple-600 to-blue-600 
             hover:opacity-90 transition shadow-lg"
           >
-            Login
+            {isLoading? 'Logging in...':'Login'}
           </motion.button>
 
         </form>
