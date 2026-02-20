@@ -31,6 +31,7 @@ export async function POST(req) {
  const hashpassword = await bcrypt.hash(password, 10);
 
   const newUser = {
+    id: Date.now().toString(), // Add a unique ID for the user
     name,
     email,
     password: hashpassword,

@@ -29,11 +29,9 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      // Using axios directly requires the full URL.
-      // It's best practice to store the base URL in an environment variable.
-      const baseURL =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
-      const res = await axios.post(`${baseURL}/auth/register`, form);
+      // The API route is part of the same Next.js app, so we can use a relative path.
+      // This will correctly point to http://localhost:3000/api/auth/register in development.
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "auth/register", form);
       toast.success(res.data.message || "Registration successful!");
       router.push("/login");
     } catch (error) {
