@@ -15,6 +15,7 @@ export default function LoginPage() {
 
   const handleChange =(e)=>{
     setForm({...form,[e.tanget.name]:e.tanget.value})
+    console.log(form)
   }
 
   return (
@@ -63,7 +64,7 @@ export default function LoginPage() {
               type="email"
               name="email"
               required
-              value={email}
+              
               onChange={handleChange}
               className="w-full bg-transparent border border-white/20 
               rounded-xl px-4 pt-6 pb-2 focus:outline-none 
@@ -84,7 +85,7 @@ export default function LoginPage() {
               type="password"
               name="password"
               required
-              value={password}
+             
               onChange={handleChange}
               className="w-full bg-transparent border border-white/20 
               rounded-xl px-4 pt-6 pb-2 focus:outline-none 

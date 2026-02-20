@@ -62,6 +62,13 @@ export default function RegisterPage() {
         rounded-2xl shadow-2xl 
         p-8 text-white"
       >
+        <button
+          onClick={() => router.back()}
+          className="mb-6 text-sm text-gray-400 hover:text-white 
+          transition flex items-center gap-2"
+        >
+          ← Back
+        </button>
         <h2 className="text-3xl font-bold text-center mb-2">
           Create Account
         </h2>
