@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import toast ,{Toaster} from "react-hot-toast";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -12,22 +13,39 @@ export default function RegisterPage() {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-// api call for register
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-const handleSubmit = async (e) =>{
-  e.preventDefault();
+  // api call for register
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  try {
-     const res = await api.post('/auth/register', form);
-     toast.success(res.data.message);
-     Router.push('/login')    
-  } catch (error) {
-    console.log(error);
-    toast.error(error)
-    
-  }
-}
+    try {
+      // Using axios directly requires the full URL.
+      // It's best practice to store the base URL in an environment variable.
+      const baseURL =
+        process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+      const res = await axios.post(`${baseURL}/auth/register`, form);
+      toast.success(res.data.message || "Registration successful!");
+      router.push("/login");
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        error.response?.data?.message ||
+          "Registration failed. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center 
@@ -61,6 +79,9 @@ const handleSubmit = async (e) =>{
             <input
               type="text"
               placeholder="Full Name"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
               required
               className="w-full bg-transparent border border-white/20 
               rounded-xl px-4 py-3 focus:outline-none 
@@ -74,6 +95,9 @@ const handleSubmit = async (e) =>{
             <input
               type="email"
               placeholder="Email Address"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
               required
               className="w-full bg-transparent border border-white/20 
               rounded-xl px-4 py-3 focus:outline-none 
@@ -87,6 +111,9 @@ const handleSubmit = async (e) =>{
             <input
               type="password"
               placeholder="Password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
               required
               className="w-full bg-transparent border border-white/20 
               rounded-xl px-4 py-3 focus:outline-none 
@@ -97,14 +124,16 @@ const handleSubmit = async (e) =>{
 
           {/* Button */}
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: isLoading ? 1 : 1.03 }}
+            whileTap={{ scale: isLoading ? 1 : 0.97 }}
             type="submit"
+            disabled={isLoading}
             className="w-full py-3 rounded-xl font-semibold 
             bg-gradient-to-r from-purple-600 to-blue-600 
-            hover:opacity-90 transition shadow-lg"
+            hover:opacity-90 transition shadow-lg
+            disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Register
+            {isLoading ? "Registering..." : "Register"}
           </motion.button>
         </form>
 

@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation"; 
+import toast from "react-hot-toast";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -28,10 +28,6 @@ export default function ResetPasswordPage() {
   return (
     <div className="min-h-screen flex items-center justify-center 
     bg-gradient-to-br from-black via-zinc-900 to-black relative overflow-hidden">
-
-      {/* toast */}
-      <Toaster position="top-center" reverseOrder={false} />
-
       {/* Glow Background */}
       <div className="absolute w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse top-10 left-10"></div>
       <div className="absolute w-96 h-96 bg-blue-600/20 rounded-full blur-3xl animate-pulse bottom-10 right-10"></div>
