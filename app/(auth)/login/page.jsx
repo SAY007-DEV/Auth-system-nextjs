@@ -6,9 +6,16 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    email : "",
+    password : ""
+  });
+  
   const router = useRouter();
+
+  const handleChange =(e)=>{
+    setForm({...form,[e.tanget.name]:e.tanget.value})
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center 
@@ -54,9 +61,10 @@ export default function LoginPage() {
           <div className="relative">
             <input
               type="email"
+              name="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleChange}
               className="w-full bg-transparent border border-white/20 
               rounded-xl px-4 pt-6 pb-2 focus:outline-none 
               focus:border-purple-500 focus:ring-1 
@@ -74,9 +82,10 @@ export default function LoginPage() {
           <div className="relative">
             <input
               type="password"
+              name="password"
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
               className="w-full bg-transparent border border-white/20 
               rounded-xl px-4 pt-6 pb-2 focus:outline-none 
               focus:border-purple-500 focus:ring-1 
