@@ -4,12 +4,14 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function LoginPage() {
   const [form, setForm] = useState({
     email : "",
     password : ""
   });
+  const [isLoading,setIsLoading]=useState(false)
   
   const router = useRouter();
 
@@ -17,6 +19,28 @@ export default function LoginPage() {
     setForm({...form,[e.tanget.name]:e.tanget.value})
     console.log(form)
   }
+
+  // api call
+const handleSubmit =async (e)=>{
+  e.preventDefault();
+  setIsLoading(true);
+
+  try {
+    
+    const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + "auth/login", form);
+    toast.success(res.data.message || "Login successful!");
+      router.push("/dashboard");
+
+  } catch (error) {
+      console.error(error);
+      toast.error(
+        error.response?.data?.message ||
+          "Login failed. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center 
