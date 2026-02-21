@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { connectDB } from "@/lib/db";
+import users from "@/models/users";
 
-
-let users = [];
 
 export async function POST(req) {
   try {
+    await connectDB();
     const { email, password } = await req.json();
 
     if (!email || !password) {
@@ -16,7 +17,7 @@ export async function POST(req) {
       );
     }
 
-    const user = users.find((user) => user.email === email);
+    const user = await users.findOne({ email });
 
     if (!user) {
       return NextResponse.json(
@@ -35,7 +36,7 @@ export async function POST(req) {
     }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user._id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );

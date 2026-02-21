@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [form, setForm] = useState({
@@ -16,8 +17,8 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleChange =(e)=>{
-    setForm({...form,[e.tanget.name]:e.tanget.value})
-    console.log(form)
+    setForm({...form,[e.target.name]:e.target.value})
+    
   }
 
   // api call
@@ -80,7 +81,7 @@ const handleSubmit =async (e)=>{
           Login to your account
         </p>
 
-        <form className="space-y-6" onClick={handleSubmit}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
 
           {/* Email Field */}
           <div className="relative">
@@ -88,7 +89,7 @@ const handleSubmit =async (e)=>{
               type="email"
               name="email"
               required
-              
+              value={form.email}
               onChange={handleChange}
               className="w-full bg-transparent border border-white/20 
               rounded-xl px-4 pt-6 pb-2 focus:outline-none 
@@ -109,7 +110,7 @@ const handleSubmit =async (e)=>{
               type="password"
               name="password"
               required
-             
+              value={form.password}
               onChange={handleChange}
               className="w-full bg-transparent border border-white/20 
               rounded-xl px-4 pt-6 pb-2 focus:outline-none 
