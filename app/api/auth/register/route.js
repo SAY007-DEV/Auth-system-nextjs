@@ -22,7 +22,7 @@ export async function POST(req) {
     }
 
 
-    const userExists = users.find((user) => user.email === email);
+    const userExists = await users.findOne({ email });
 
   if (userExists) {
     return NextResponse.json(
@@ -33,18 +33,15 @@ export async function POST(req) {
 
  const hashpassword = await bcrypt.hash(password, 10);
 
-  const newUser = {
-    id: Date.now().toString(), // Add a unique ID for the user
+  const newUser = await users.create({
     name,
     email,
     password: hashpassword,
-  };
-
-  Users.push(newUser);
+  });
 
 
    const token = jwt.sign(
-      { id: newUser.id, email: newUser.email },
+      { id: newUser._id, email: newUser.email },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
